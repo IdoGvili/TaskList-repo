@@ -1,0 +1,40 @@
+[{
+   "id": 1,
+   "task": "Render a list",
+   "complete": false,
+   "dueMonth": 1,
+   "new" : false
+ }, {
+   "id": 2,
+   "task": "Implement callbacks",
+    "complete": false,
+   "dueMonth": 2,
+   "new" : false
+  
+ }, {
+   "id": 3,
+   "task": "Rudimentary date system",
+   "complete": false,
+   "dueMonth": 3,
+   "new" : false
+ }, {
+   "id": 4,
+   "task": "Finish date system",
+   "complete": false,
+   "dueMonth": 4,
+   "new" : false
+ },{
+   "id": 5,
+   "task": "UI/UX improvment",
+    "complete": false,
+   "dueMonth": 5,
+   "new" : false
+  
+ },{
+   "id": 6,
+   "task": "Upload to Github",
+    "complete": false,
+   "dueMonth": 6,
+   "new" : false
+  
+ }]
