@@ -23,7 +23,8 @@ module.exports = {
   rules: {
     'react/prop-types': 'off',
     'no-unused-vars': 'warn',
-
+    indent: ['error', 4],
     '@garvae/comments/no-line-comments': 'error',
+    'no-multiple-empty-lines': 'error',
   },
 };
