@@ -18,7 +18,6 @@ function ToDoForm({ addTask }) {
 
     addTask(userInput);
     setUserInput({ task: '', date: '1' });
-    // setUserInput("");
   };
   return (
     <>

@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['airbnb', 'prettier'],
+  extends: ['airbnb', 'prettier', 'airbnb/hooks'],
   overrides: [
     {
       env: {
@@ -19,9 +19,11 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', 'prettier', '@garvae/comments'],
   rules: {
     'react/prop-types': 'off',
     'no-unused-vars': 'warn',
+
+    '@garvae/comments/no-line-comments': 'error',
   },
 };
