@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { ColorRing } from 'react-loader-spinner';
 import data from './data.json';
 
 import Header from './Header';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 
+async function fetchData(setToDoList) {
+    await new Promise((resolve) => {
+        setTimeout(resolve, 2000);
+    });
+    const response = await fetch(
+        'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
+    );
+    const fetchedData = await response.json();
+    setToDoList(fetchedData);
+}
+
 function App() {
     const [toDoList, setToDoList] = useState([]);
 
     useEffect(() => {
-        async function fetchData() {
-            const response = await fetch(
-                'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
-            );
-            const fetchedData = await response.json();
-            setToDoList(fetchedData);
-        }
-
-        fetchData();
+        fetchData(setToDoList);
     }, []);
 
     const [listId, setListId] = useState(toDoList.length);
@@ -59,10 +63,32 @@ function App() {
     };
 
     return (
-        <div className="App">
-            <Header />
-            <ToDoList toDoList={toDoList} handleButton={handleButton} />
-            <ToDoForm addTask={addTask} />
+        <div>
+            {toDoList.length === 0 ? (
+                <div>
+                    <h1>Loading...</h1>
+                    <ColorRing
+                        height="80"
+                        width="80"
+                        ariaLabel="blocks-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="blocks-wrapper"
+                        colors={[
+                            '#e15b64',
+                            '#f47e60',
+                            '#f8b26a',
+                            '#abbd81',
+                            '#849b87',
+                        ]}
+                    />
+                </div>
+            ) : (
+                <div className="App">
+                    <Header />
+                    <ToDoList toDoList={toDoList} handleButton={handleButton} />
+                    <ToDoForm addTask={addTask} />
+                </div>
+            )}
         </div>
     );
 }
