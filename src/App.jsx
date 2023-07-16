@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
-import Data from './Data.json';
+import React, { useState, useEffect } from 'react';
+import data from './data.json';
 
 import Header from './Header';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 
 function App() {
-    const [toDoList, setToDoList] = useState(Data);
+    const [toDoList, setToDoList] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch(
+                'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
+            );
+            const fetchedData = await response.json();
+            setToDoList(fetchedData);
+        }
+
+        fetchData();
+    }, []);
+
     const [listId, setListId] = useState(toDoList.length);
 
     const handleButton = (id) => {
