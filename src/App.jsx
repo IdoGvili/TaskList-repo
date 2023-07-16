@@ -66,21 +66,7 @@ function App() {
         <div>
             {toDoList.length === 0 ? (
                 <div>
-                    <h1>Loading...</h1>
-                    <ColorRing
-                        height="80"
-                        width="80"
-                        ariaLabel="blocks-loading"
-                        wrapperStyle={{}}
-                        wrapperClass="blocks-wrapper"
-                        colors={[
-                            '#e15b64',
-                            '#f47e60',
-                            '#f8b26a',
-                            '#abbd81',
-                            '#849b87',
-                        ]}
-                    />
+                    <Loading />
                 </div>
             ) : (
                 <div className="App">
@@ -90,6 +76,21 @@ function App() {
                 </div>
             )}
         </div>
+    );
+}
+function Loading() {
+    return (
+        <>
+            <h1>Loading...</h1>
+            <ColorRing
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+                colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+            />
+        </>
     );
 }
 
