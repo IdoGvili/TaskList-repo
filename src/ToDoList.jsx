@@ -1,21 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import ToDo from './ToDo';
 
 export default function ToDoList({ toDoList, setToDoList, handleButton }) {
-    async function fetchData() {
-        await new Promise((resolve) => {
-            setTimeout(resolve, 2000);
-        });
+    const fetchData = useCallback(async () => {
         const response = await fetch(
             'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
         );
         const fetchedData = await response.json();
         setToDoList(fetchedData);
-    }
+    }, [setToDoList]);
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     return toDoList.length === 0 ? (
         <div>
