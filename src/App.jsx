@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { v4 } from 'uuid';
 import Header from './Header';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
@@ -16,11 +17,9 @@ function App() {
 function Todos() {
     const [toDoList, setToDoList] = useState([]);
 
-    const [listId, setListId] = useState(toDoList.length);
-
     const onRemoveTodo = (id) => {
         const mapped = toDoList.map((task) =>
-            task.id === Number(id)
+            task.id === id
                 ? { ...task, complete: !task.complete }
                 : { ...task },
         );
@@ -42,7 +41,7 @@ function Todos() {
         const copy = [
             ...before,
             {
-                id: listId + 1,
+                id: v4(),
                 task: userInput.task,
                 complete: false,
                 dueMonth: userInput.date,
@@ -50,7 +49,7 @@ function Todos() {
             },
             ...after,
         ];
-        setListId((n) => n + 1);
+
         setToDoList(copy);
     };
     const fetchData = useCallback(async () => {
@@ -58,7 +57,8 @@ function Todos() {
             'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
         );
         const fetchedData = await response.json();
-        setToDoList(fetchedData);
+        const newData = fetchedData.map((task) => ({ ...task, id: v4() }));
+        setToDoList(newData);
     }, [setToDoList]);
     useEffect(() => {
         fetchData();
