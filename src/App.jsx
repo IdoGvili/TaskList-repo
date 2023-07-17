@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
-
+import React, { useState, useCallback, useEffect } from 'react';
 import Header from './Header';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 
 function App() {
+    return (
+        <div>
+            <div className="App">
+                <Header />
+                <Todos />
+            </div>
+        </div>
+    );
+}
+function Todos() {
     const [toDoList, setToDoList] = useState([]);
 
     const [listId, setListId] = useState(toDoList.length);
 
-    const handleButton = (id) => {
+    const onRemoveTodo = (id) => {
         const mapped = toDoList.map((task) =>
             task.id === Number(id)
                 ? { ...task, complete: !task.complete }
@@ -22,7 +31,7 @@ function App() {
         setToDoList(filtered);
     };
 
-    const addTask = (userInput) => {
+    const onAddTodo = (userInput) => {
         const before = toDoList.filter(
             (task) => task.dueMonth < userInput.date,
         );
@@ -44,19 +53,26 @@ function App() {
         setListId((n) => n + 1);
         setToDoList(copy);
     };
+    const fetchData = useCallback(async () => {
+        const response = await fetch(
+            'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
+        );
+        const fetchedData = await response.json();
+        setToDoList(fetchedData);
+    }, [setToDoList]);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     return (
-        <div>
-            <div className="App">
-                <Header />
-                <ToDoList
-                    toDoList={toDoList}
-                    setToDoList={setToDoList}
-                    handleButton={handleButton}
-                />
-                <ToDoForm addTask={addTask} />
-            </div>
-        </div>
+        <>
+            <ToDoList
+                toDoList={toDoList}
+                setToDoList={setToDoList}
+                onRemoveTodo={onRemoveTodo}
+            />
+            <ToDoForm onAddTodo={onAddTodo} />
+        </>
     );
 }
 

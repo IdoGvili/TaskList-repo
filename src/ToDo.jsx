@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 
-function ToDo({ todo, handleButton }) {
+function ToDo({ todo, onRemoveTodo }) {
     const handleButtonPress = (e) => {
         e.preventDefault();
-        handleButton(e.currentTarget.parentNode.id);
+        onRemoveTodo(e.currentTarget.parentNode.id);
     };
 
     let className = 'task';

@@ -1,19 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import ToDo from './ToDo';
 
-export default function ToDoList({ toDoList, setToDoList, handleButton }) {
-    const fetchData = useCallback(async () => {
-        const response = await fetch(
-            'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
-        );
-        const fetchedData = await response.json();
-        setToDoList(fetchedData);
-    }, [setToDoList]);
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
+export default function ToDoList({ toDoList, onRemoveTodo }) {
     return toDoList.length === 0 ? (
         <div>
             <Loading />
@@ -21,7 +10,7 @@ export default function ToDoList({ toDoList, setToDoList, handleButton }) {
     ) : (
         <div>
             {toDoList.map((todo) => (
-                <ToDo todo={todo} handleButton={handleButton} key={todo.id} />
+                <ToDo todo={todo} onRemoveTodo={onRemoveTodo} key={todo.id} />
             ))}
         </div>
     );
