@@ -15,9 +15,9 @@ function App() {
     );
 }
 function Todos() {
-    const [toDoList, setToDoList] = useState([]);
+    const [toDoList, setToDoList] = useState(null);
 
-    const onRemoveTodo = (id) => {
+    const onRemoveTodo = ({ id }) => {
         const mapped = toDoList.map((task) =>
             task.id === id
                 ? { ...task, complete: !task.complete }
@@ -30,21 +30,17 @@ function Todos() {
         setToDoList(filtered);
     };
 
-    const onAddTodo = (userInput) => {
-        const before = toDoList.filter(
-            (task) => task.dueMonth < userInput.date,
-        );
-        const after = toDoList.filter(
-            (task) => task.dueMonth >= userInput.date,
-        );
+    const onAddTodo = ({ task, date }) => {
+        const before = toDoList.filter((thisTask) => thisTask.dueMonth < date);
+        const after = toDoList.filter((thisTask) => thisTask.dueMonth >= date);
 
         const copy = [
             ...before,
             {
                 id: v4(),
-                task: userInput.task,
+                task: task,
                 complete: false,
-                dueMonth: userInput.date,
+                dueMonth: date,
                 new: true,
             },
             ...after,
@@ -52,6 +48,7 @@ function Todos() {
 
         setToDoList(copy);
     };
+
     const fetchData = useCallback(async () => {
         const response = await fetch(
             'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
@@ -66,11 +63,7 @@ function Todos() {
 
     return (
         <>
-            <ToDoList
-                toDoList={toDoList}
-                setToDoList={setToDoList}
-                onRemoveTodo={onRemoveTodo}
-            />
+            <ToDoList toDoList={toDoList} onRemoveTodo={onRemoveTodo} />
             <ToDoForm onAddTodo={onAddTodo} />
         </>
     );

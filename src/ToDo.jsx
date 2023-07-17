@@ -4,7 +4,7 @@ import './App.css';
 function ToDo({ todo, onRemoveTodo }) {
     const handleButtonPress = (e) => {
         e.preventDefault();
-        onRemoveTodo(e.currentTarget.parentNode.id);
+        onRemoveTodo(e.currentTarget.parentNode);
     };
 
     let className = 'task';

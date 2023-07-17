@@ -3,7 +3,7 @@ import { ColorRing } from 'react-loader-spinner';
 import ToDo from './ToDo';
 
 export default function ToDoList({ toDoList, onRemoveTodo }) {
-    return toDoList.length === 0 ? (
+    return toDoList === null ? (
         <div>
             <Loading />
         </div>
