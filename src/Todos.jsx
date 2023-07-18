@@ -33,6 +33,7 @@ function Todos() {
                 complete: false,
                 dueMonth: date,
                 new: true,
+                show: true,
             },
             ...after,
         ];
@@ -45,20 +46,23 @@ function Todos() {
             'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
         );
         const fetchedData = await response.json();
-        const newData = fetchedData.map((toDo) => ({ ...toDo, id: v4() }));
-        const newDataWithShow = newData.map((toDo) => {
-            return { ...toDo, show: true };
-        });
-        setToDoList(newDataWithShow);
+        const newData = fetchedData.map((toDo) => ({
+            ...toDo,
+            id: v4(),
+            show: true,
+        }));
+
+        setToDoList(newData);
     }, []);
     useEffect(() => {
         fetchData();
     }, [fetchData]);
     const filterToDoList = useCallback(
-        (searchTermProp) => {
+        (searchTerm) => {
             setToDoList(
                 toDoList.map((toDo) => {
-                    if (toDo.task.includes(searchTermProp)) {
+                    const regex = new RegExp(searchTerm, 'i');
+                    if (regex.test(toDo.task)) {
                         return { ...toDo, show: true };
                     }
                     return { ...toDo, show: false };
