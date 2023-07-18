@@ -7,7 +7,7 @@ import Search from './Search';
 
 function Todos() {
     const [toDoList, setToDoList] = useState(null);
-    const [toDoListfliteredOut, setToDoListfliteredOut] = useState([]);
+
     const onRemoveTodo = ({ id: toDoId }) => {
         const mapped = toDoList.map((toDo) =>
             toDo.id === toDoId
@@ -46,24 +46,26 @@ function Todos() {
         );
         const fetchedData = await response.json();
         const newData = fetchedData.map((toDo) => ({ ...toDo, id: v4() }));
-        setToDoList(newData);
+        const newDataWithShow = newData.map((toDo) => {
+            return { ...toDo, show: true };
+        });
+        setToDoList(newDataWithShow);
     }, []);
     useEffect(() => {
         fetchData();
     }, [fetchData]);
     const filterToDoList = useCallback(
         (searchTermProp) => {
-            const combinedList = [...toDoList, ...toDoListfliteredOut];
-            const filteredIn = combinedList.filter((toDo) =>
-                toDo.task.includes(searchTermProp),
+            setToDoList(
+                toDoList.map((toDo) => {
+                    if (toDo.task.includes(searchTermProp)) {
+                        return { ...toDo, show: true };
+                    }
+                    return { ...toDo, show: false };
+                }),
             );
-            const filteredOut = combinedList.filter(
-                (toDo) => !toDo.task.includes(searchTermProp),
-            );
-            setToDoList(filteredIn);
-            setToDoListfliteredOut(filteredOut);
         },
-        [toDoList, toDoListfliteredOut],
+        [toDoList],
     );
     return (
         <>
