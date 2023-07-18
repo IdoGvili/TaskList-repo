@@ -8,10 +8,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
 }
-.newTask {
-    color: green;
-    font-weight: bold;
-}
+
 div {
     padding-bottom: 15px;
 }

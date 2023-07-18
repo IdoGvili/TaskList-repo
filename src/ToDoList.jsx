@@ -1,14 +1,32 @@
 import React from 'react';
+import { ColorRing } from 'react-loader-spinner';
 import ToDo from './ToDo';
 
-function ToDoList({ toDoList, handleButton }) {
-    return (
+export default function ToDoList({ toDoList, onRemoveTodo }) {
+    return toDoList === null ? (
         <div>
-            {toDoList.map((todo) => (
-                <ToDo todo={todo} handleButton={handleButton} key={todo.id} />
+            <Loading />
+        </div>
+    ) : (
+        <div>
+            {toDoList.map((toDo) => (
+                <ToDo toDo={toDo} onRemoveTodo={onRemoveTodo} key={toDo.id} />
             ))}
         </div>
     );
 }
-
-export default ToDoList;
+function Loading() {
+    return (
+        <>
+            <h1>Loading...</h1>
+            <ColorRing
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+                colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+            />
+        </>
+    );
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ToDoForm({ addTask }) {
+function ToDoForm({ onAddTodo }) {
     const [userInput, setUserInput] = useState({
         task: '',
         date: '1',
@@ -16,7 +16,7 @@ function ToDoForm({ addTask }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        addTask(userInput);
+        onAddTodo(userInput);
         setUserInput({ task: '', date: '1' });
     };
     return (

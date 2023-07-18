@@ -1,56 +1,71 @@
-import React, { useState } from 'react';
-import Data from './Data.json';
-
+import React, { useState, useCallback, useEffect } from 'react';
+import { v4 } from 'uuid';
 import Header from './Header';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 
 function App() {
-    const [toDoList, setToDoList] = useState(Data);
-    const [listId, setListId] = useState(toDoList.length);
+    return (
+        <div>
+            <div className="App">
+                <Header />
+                <Todos />
+            </div>
+        </div>
+    );
+}
+function Todos() {
+    const [toDoList, setToDoList] = useState(null);
 
-    const handleButton = (id) => {
-        const mapped = toDoList.map((task) =>
-            task.id === Number(id)
-                ? { ...task, complete: !task.complete }
-                : { ...task },
+    const onRemoveTodo = ({ id: toDoId }) => {
+        const mapped = toDoList.map((toDo) =>
+            toDo.id === toDoId
+                ? { ...toDo, complete: !toDo.complete }
+                : { ...toDo },
         );
         setToDoList(mapped);
 
-        const filtered = mapped.filter((task) => !task.complete);
+        const filtered = mapped.filter((toDo) => !toDo.complete);
 
         setToDoList(filtered);
     };
 
-    const addTask = (userInput) => {
-        const before = toDoList.filter(
-            (task) => task.dueMonth < userInput.date,
-        );
-        const after = toDoList.filter(
-            (task) => task.dueMonth >= userInput.date,
-        );
+    const onAddTodo = ({ task, date }) => {
+        const before = toDoList.filter((toDo) => toDo.dueMonth < date);
+        const after = toDoList.filter((toDo) => toDo.dueMonth >= date);
 
         const copy = [
             ...before,
             {
-                id: listId + 1,
-                task: userInput.task,
+                id: v4(),
+                task: task,
                 complete: false,
-                dueMonth: userInput.date,
+                dueMonth: date,
                 new: true,
             },
             ...after,
         ];
-        setListId((n) => n + 1);
+
         setToDoList(copy);
     };
 
+    const fetchData = useCallback(async () => {
+        const response = await fetch(
+            'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
+        );
+        const fetchedData = await response.json();
+        const newData = fetchedData.map((task) => ({ ...task, id: v4() }));
+        setToDoList(newData);
+    }, []);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
     return (
-        <div className="App">
-            <Header />
-            <ToDoList toDoList={toDoList} handleButton={handleButton} />
-            <ToDoForm addTask={addTask} />
-        </div>
+        <>
+            <ToDoList toDoList={toDoList} onRemoveTodo={onRemoveTodo} />
+            <ToDoForm onAddTodo={onAddTodo} />
+        </>
     );
 }
 

@@ -1,26 +1,26 @@
 import React from 'react';
 import './App.css';
 
-function ToDo({ todo, handleButton }) {
+function ToDo({ toDo, onRemoveTodo }) {
     const handleButtonPress = (e) => {
         e.preventDefault();
-        handleButton(e.currentTarget.parentNode.id);
+        onRemoveTodo(e.currentTarget.parentNode);
     };
 
-    let className = 'task';
-    if (todo.new) {
-        className += ' newTask';
+    let className = 'toDo';
+    if (toDo.new) {
+        className += ' newToDo';
     }
     return (
         <div
-            id={todo.id}
-            key={todo.id + todo.task}
+            id={toDo.id}
+            key={toDo.id + toDo.task}
             className={className}
             name="todo"
-            value={todo.id}
+            value={toDo.id}
         >
-            {todo.task}
-            -BY {todo.dueMonth}/2023
+            {toDo.task}
+            -BY {toDo.dueMonth}/2023
             <button onClick={handleButtonPress} type="button">
                 {' '}
                 delete
