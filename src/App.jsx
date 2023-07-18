@@ -16,7 +16,7 @@ function App() {
 }
 function Todos() {
     const [toDoList, setToDoList] = useState(null);
-
+    const [searchTerm, setSearchTerm] = useState('');
     const onRemoveTodo = ({ id: toDoId }) => {
         const mapped = toDoList.map((toDo) =>
             toDo.id === toDoId
@@ -30,7 +30,7 @@ function Todos() {
         setToDoList(filtered);
     };
 
-    const onAddTodo = ({ task, date }) => {
+    const onAddTodo = ({ task: newTask, date }) => {
         const before = toDoList.filter((toDo) => toDo.dueMonth < date);
         const after = toDoList.filter((toDo) => toDo.dueMonth >= date);
 
@@ -38,7 +38,7 @@ function Todos() {
             ...before,
             {
                 id: v4(),
-                task: task,
+                task: newTask,
                 complete: false,
                 dueMonth: date,
                 new: true,
@@ -54,18 +54,42 @@ function Todos() {
             'https://raw.githubusercontent.com/IdoGvili/TaskList-repo/master/src/Data.json',
         );
         const fetchedData = await response.json();
-        const newData = fetchedData.map((task) => ({ ...task, id: v4() }));
+        const newData = fetchedData.map((toDo) => ({ ...toDo, id: v4() }));
         setToDoList(newData);
     }, []);
     useEffect(() => {
         fetchData();
     }, [fetchData]);
-
+    const handleSearchTerm = useCallback((searchTermProp) => {
+        setSearchTerm(searchTermProp);
+    }, []);
     return (
         <>
-            <ToDoList toDoList={toDoList} onRemoveTodo={onRemoveTodo} />
+            <ToDoList
+                toDoList={toDoList}
+                onRemoveTodo={onRemoveTodo}
+                searchTerm={searchTerm}
+            />
             <ToDoForm onAddTodo={onAddTodo} />
+            <Search handleSearchTerm={handleSearchTerm} />
         </>
+    );
+}
+function Search({ handleSearchTerm }) {
+    const handleChange = (e) => {
+        const searchTerm = e.target.value;
+        handleSearchTerm(searchTerm);
+    };
+
+    return (
+        <div>
+            <h3>Search</h3>
+            <input
+                type="text"
+                placeholder="Search Item..."
+                onChange={handleChange}
+            />
+        </div>
     );
 }
 
