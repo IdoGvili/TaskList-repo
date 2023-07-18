@@ -9,9 +9,16 @@ export default function ToDoList({ toDoList, onRemoveTodo }) {
         </div>
     ) : (
         <div>
-            {toDoList.map((toDo) => (
-                <ToDo toDo={toDo} onRemoveTodo={onRemoveTodo} key={toDo.id} />
-            ))}
+            {toDoList.map(
+                (toDo) =>
+                    toDo.show && (
+                        <ToDo
+                            toDo={toDo}
+                            onRemoveTodo={onRemoveTodo}
+                            key={toDo.id}
+                        />
+                    ),
+            )}
         </div>
     );
 }
