@@ -17,22 +17,22 @@ function App() {
 function Todos() {
     const [toDoList, setToDoList] = useState(null);
 
-    const onRemoveTodo = ({ id }) => {
-        const mapped = toDoList.map((task) =>
-            task.id === id
-                ? { ...task, complete: !task.complete }
-                : { ...task },
+    const onRemoveTodo = ({ id: toDoId }) => {
+        const mapped = toDoList.map((toDo) =>
+            toDo.id === toDoId
+                ? { ...toDo, complete: !toDo.complete }
+                : { ...toDo },
         );
         setToDoList(mapped);
 
-        const filtered = mapped.filter((task) => !task.complete);
+        const filtered = mapped.filter((toDo) => !toDo.complete);
 
         setToDoList(filtered);
     };
 
     const onAddTodo = ({ task, date }) => {
-        const before = toDoList.filter((thisTask) => thisTask.dueMonth < date);
-        const after = toDoList.filter((thisTask) => thisTask.dueMonth >= date);
+        const before = toDoList.filter((toDo) => toDo.dueMonth < date);
+        const after = toDoList.filter((toDo) => toDo.dueMonth >= date);
 
         const copy = [
             ...before,
@@ -56,7 +56,7 @@ function Todos() {
         const fetchedData = await response.json();
         const newData = fetchedData.map((task) => ({ ...task, id: v4() }));
         setToDoList(newData);
-    }, [setToDoList]);
+    }, []);
     useEffect(() => {
         fetchData();
     }, [fetchData]);
