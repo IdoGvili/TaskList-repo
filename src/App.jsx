@@ -16,7 +16,7 @@ function App() {
 }
 function Todos() {
     const [toDoList, setToDoList] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [toDoListfliteredOut, setToDoListfliteredOut] = useState([]);
     const onRemoveTodo = ({ id: toDoId }) => {
         const mapped = toDoList.map((toDo) =>
             toDo.id === toDoId
@@ -60,25 +60,32 @@ function Todos() {
     useEffect(() => {
         fetchData();
     }, [fetchData]);
-    const handleSearchTerm = useCallback((searchTermProp) => {
-        setSearchTerm(searchTermProp);
-    }, []);
+    const filterToDoList = useCallback(
+        (searchTermProp) => {
+            const combinedList = [...toDoList, ...toDoListfliteredOut];
+            const filteredIn = combinedList.filter((toDo) =>
+                toDo.task.includes(searchTermProp),
+            );
+            const filteredOut = combinedList.filter(
+                (toDo) => !toDo.task.includes(searchTermProp),
+            );
+            setToDoList(filteredIn);
+            setToDoListfliteredOut(filteredOut);
+        },
+        [toDoList, toDoListfliteredOut],
+    );
     return (
         <>
-            <ToDoList
-                toDoList={toDoList}
-                onRemoveTodo={onRemoveTodo}
-                searchTerm={searchTerm}
-            />
+            <ToDoList toDoList={toDoList} onRemoveTodo={onRemoveTodo} />
             <ToDoForm onAddTodo={onAddTodo} />
-            <Search handleSearchTerm={handleSearchTerm} />
+            <Search filterToDoList={filterToDoList} />
         </>
     );
 }
-function Search({ handleSearchTerm }) {
-    const handleChange = (e) => {
+function Search({ filterToDoList }) {
+    const onSearchTermChange = (e) => {
         const searchTerm = e.target.value;
-        handleSearchTerm(searchTerm);
+        filterToDoList(searchTerm);
     };
 
     return (
@@ -87,7 +94,7 @@ function Search({ handleSearchTerm }) {
             <input
                 type="text"
                 placeholder="Search Item..."
-                onChange={handleChange}
+                onChange={onSearchTermChange}
             />
         </div>
     );

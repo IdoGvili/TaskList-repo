@@ -2,23 +2,16 @@ import React from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import ToDo from './ToDo';
 
-export default function ToDoList({ toDoList, onRemoveTodo, searchTerm }) {
+export default function ToDoList({ toDoList, onRemoveTodo }) {
     return toDoList === null ? (
         <div>
             <Loading />
         </div>
     ) : (
         <div>
-            {toDoList.map(
-                (toDo) =>
-                    (toDo.task.includes(searchTerm) || searchTerm === '') && (
-                        <ToDo
-                            toDo={toDo}
-                            onRemoveTodo={onRemoveTodo}
-                            key={toDo.id}
-                        />
-                    ),
-            )}
+            {toDoList.map((toDo) => (
+                <ToDo toDo={toDo} onRemoveTodo={onRemoveTodo} key={toDo.id} />
+            ))}
         </div>
     );
 }
