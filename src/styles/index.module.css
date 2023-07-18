@@ -8,12 +8,3 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
 }
-
-div {
-    padding-bottom: 15px;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
-}

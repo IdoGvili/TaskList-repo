@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import styles from './styles/ToDo.module.css';
 
 function ToDo({ toDo, onRemoveTodo }) {
     const handleButtonPress = (e) => {
@@ -7,9 +7,9 @@ function ToDo({ toDo, onRemoveTodo }) {
         onRemoveTodo(e.currentTarget.parentNode);
     };
 
-    let className = 'toDo';
+    let className = styles.toDo;
     if (toDo.new) {
-        className += ' newToDo';
+        className = styles.newToDo;
     }
     return (
         <div
