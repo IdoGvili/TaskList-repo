@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
+import Priorities from './prioritiesENUM';
+import styles from './styles/ToDoForm.module.css';
 
 function ToDoForm({ onAddTodo }) {
     const [userInput, setUserInput] = useState({
         task: '',
         date: '1',
+        priority: Priorities.Low,
     });
 
     const handleChange = (e) => {
-        setUserInput({ task: e.currentTarget.value, date: userInput.date });
+        setUserInput({ ...userInput, task: e.currentTarget.value });
     };
     const handleChangeDate = (e) => {
-        setUserInput({ date: e.currentTarget.value, task: userInput.task });
+        setUserInput({ ...userInput, date: e.currentTarget.value });
+    };
+    const handleChangePriority = (e) => {
+        setUserInput({ ...userInput, priority: e.currentTarget.value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         onAddTodo(userInput);
-        setUserInput({ task: '', date: '1' });
+        setUserInput({ task: '', date: '1', priority: Priorities.Low });
     };
     return (
         <>
@@ -31,6 +37,18 @@ function ToDoForm({ onAddTodo }) {
                 />
                 <button type="submit">Submit</button>
                 <br />
+                <label htmlFor="priority">
+                    Priority:
+                    <select
+                        onChange={handleChangePriority}
+                        name="priority"
+                        id="priority"
+                    >
+                        <option value={Priorities.Low}>Low</option>
+                        <option value={Priorities.Medium}>Medium</option>
+                        <option value={Priorities.High}>High</option>
+                    </select>
+                </label>
                 <label htmlFor="month">
                     Due month:
                     <select onChange={handleChangeDate} name="month" id="month">

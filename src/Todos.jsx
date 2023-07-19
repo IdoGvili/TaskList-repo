@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 import Search from './Search';
+import Priorities from './prioritiesENUM';
 
 function Todos() {
     const [toDoList, setToDoList] = useState(null);
@@ -21,7 +22,7 @@ function Todos() {
         setToDoList(filtered);
     };
 
-    const onAddTodo = ({ task: newTask, date }) => {
+    const onAddTodo = ({ task: newTask, date, priority: newPriority }) => {
         const before = toDoList.filter((toDo) => toDo.dueMonth < date);
         const after = toDoList.filter((toDo) => toDo.dueMonth >= date);
 
@@ -34,6 +35,7 @@ function Todos() {
                 dueMonth: date,
                 new: true,
                 show: true,
+                priority: newPriority,
             },
             ...after,
         ];
@@ -50,6 +52,7 @@ function Todos() {
             ...toDo,
             id: v4(),
             show: true,
+            priority: Priorities.Low,
         }));
 
         setToDoList(newData);

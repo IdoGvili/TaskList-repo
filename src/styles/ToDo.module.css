@@ -14,3 +14,15 @@
     color: green;
     font-weight: bold;
 }
+.low {
+    color: blue;
+    font-weight: bold;
+}
+.medium {
+    color: yellow;
+    font-weight: bold;
+}
+.high {
+    color: red;
+    font-weight: bold;
+}
