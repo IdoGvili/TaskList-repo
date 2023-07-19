@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 import Search from './Search';
-import Priorities from './prioritiesENUM';
+import ToDo from './ToDo';
 
 function Todos() {
     const [toDoList, setToDoList] = useState(null);
@@ -52,7 +52,7 @@ function Todos() {
             ...toDo,
             id: v4(),
             show: true,
-            priority: Priorities.Low,
+            priority: ToDo.priorities.Low,
         }));
 
         setToDoList(newData);

@@ -1,37 +1,46 @@
 import React from 'react';
 import { clsx } from 'clsx';
 import styles from './styles/ToDo.module.css';
-import Priorities from './prioritiesENUM';
+
+const priorities = {
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high',
+};
 
 function ToDo({ toDo, onRemoveTodo }) {
     const handleButtonPress = (e) => {
         e.preventDefault();
         onRemoveTodo(e.currentTarget.parentNode);
     };
-    const priorityClasses = {
-        [Priorities.Low]: clsx(
-            styles.toDo,
-            styles.low,
-            toDo.new && styles.newToDo,
-        ),
-        [Priorities.Medium]: clsx(
-            styles.toDo,
-            styles.medium,
-            toDo.new && styles.newToDo,
-        ),
-        [Priorities.High]: clsx(
-            styles.toDo,
-            styles.high,
-            toDo.new && styles.newToDo,
-        ),
-    };
-
-    const classes = priorityClasses[toDo.priority];
+    // option 1
+    function priorityStyles(priority) {
+        if (priority === priorities.Low) {
+            return styles.low;
+        }
+        if (priority === priorities.Medium) {
+            return styles.medium;
+        }
+        return styles.high;
+    }
+    const classes = clsx(
+        styles.toDo,
+        toDo.new && styles.newToDo,
+        priorityStyles(toDo.priority),
+    );
+    // option 2
+    const classes2 = clsx(
+        styles.toDo,
+        toDo.new && styles.newToDo,
+        toDo.priority === priorities.Low && styles.low,
+        toDo.priority === priorities.Medium && styles.medium,
+        toDo.priority === priorities.High && styles.high,
+    );
     return (
         <div
             id={toDo.id}
             key={toDo.id + toDo.task}
-            className={classes}
+            className={classes2}
             name="todo"
             value={toDo.id}
         >
@@ -45,5 +54,6 @@ function ToDo({ toDo, onRemoveTodo }) {
         </div>
     );
 }
+ToDo.priorities = priorities;
 
 export default ToDo;

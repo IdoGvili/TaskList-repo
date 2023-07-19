@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import Priorities from './prioritiesENUM';
+import clsx from 'clsx';
+import ToDo from './ToDo';
 import styles from './styles/ToDoForm.module.css';
 
 function ToDoForm({ onAddTodo }) {
     const [userInput, setUserInput] = useState({
         task: '',
         date: '1',
-        priority: Priorities.Low,
+        priority: ToDo.priorities.Low,
     });
 
     const handleChange = (e) => {
@@ -23,13 +24,20 @@ function ToDoForm({ onAddTodo }) {
         e.preventDefault();
 
         onAddTodo(userInput);
-        setUserInput({ task: '', date: '1', priority: Priorities.Low });
+        setUserInput({ task: '', date: '1', priority: ToDo.priorities.Low });
     };
     const priorityOptions = [
-        { value: Priorities.Low, label: 'Low', className: styles.low },
-        { value: Priorities.Medium, label: 'Medium', className: styles.medium },
-        { value: Priorities.High, label: 'High', className: styles.high },
+        { value: ToDo.priorities.Low, label: 'Low', className: styles.low },
+        {
+            value: ToDo.priorities.Medium,
+            label: 'Medium',
+            className: styles.medium,
+        },
+        { value: ToDo.priorities.High, label: 'High', className: styles.high },
     ];
+    const classLow = clsx(styles.low);
+    const classMedium = clsx(styles.medium);
+    const classHigh = clsx(styles.high);
     return (
         <>
             <h3> New Task:</h3>
@@ -50,20 +58,20 @@ function ToDoForm({ onAddTodo }) {
                         id="priority"
                     >
                         <option
-                            value={Priorities.Low}
-                            style={{ color: 'blue' }}
+                            value={ToDo.priorities.Low}
+                            className={classLow}
                         >
                             Low
                         </option>
                         <option
-                            value={Priorities.Medium}
-                            style={{ color: 'brown' }}
+                            value={ToDo.priorities.Medium}
+                            className={classMedium}
                         >
                             Medium
                         </option>
                         <option
-                            value={Priorities.High}
-                            style={{ color: 'red' }}
+                            value={ToDo.priorities.High}
+                            className={classHigh}
                         >
                             High
                         </option>
