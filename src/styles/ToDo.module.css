@@ -10,8 +10,7 @@
     font-weight: bold;
 }
 .newToDo {
-    composes: toDo;
-    color: green;
+    border-color: green;
     font-weight: bold;
 }
 .low {

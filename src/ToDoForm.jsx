@@ -25,6 +25,11 @@ function ToDoForm({ onAddTodo }) {
         onAddTodo(userInput);
         setUserInput({ task: '', date: '1', priority: Priorities.Low });
     };
+    const priorityOptions = [
+        { value: Priorities.Low, label: 'Low', className: styles.low },
+        { value: Priorities.Medium, label: 'Medium', className: styles.medium },
+        { value: Priorities.High, label: 'High', className: styles.high },
+    ];
     return (
         <>
             <h3> New Task:</h3>
@@ -44,9 +49,24 @@ function ToDoForm({ onAddTodo }) {
                         name="priority"
                         id="priority"
                     >
-                        <option value={Priorities.Low}>Low</option>
-                        <option value={Priorities.Medium}>Medium</option>
-                        <option value={Priorities.High}>High</option>
+                        <option
+                            value={Priorities.Low}
+                            style={{ color: 'blue' }}
+                        >
+                            Low
+                        </option>
+                        <option
+                            value={Priorities.Medium}
+                            style={{ color: 'brown' }}
+                        >
+                            Medium
+                        </option>
+                        <option
+                            value={Priorities.High}
+                            style={{ color: 'red' }}
+                        >
+                            High
+                        </option>
                     </select>
                 </label>
                 <label htmlFor="month">

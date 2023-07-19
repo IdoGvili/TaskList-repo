@@ -9,9 +9,21 @@ function ToDo({ toDo, onRemoveTodo }) {
         onRemoveTodo(e.currentTarget.parentNode);
     };
     const priorityClasses = {
-        [Priorities.Low]: clsx(styles.toDo, styles.low),
-        [Priorities.Medium]: clsx(styles.toDo, styles.medium),
-        [Priorities.High]: clsx(styles.toDo, styles.high),
+        [Priorities.Low]: clsx(
+            styles.toDo,
+            styles.low,
+            toDo.new && styles.newToDo,
+        ),
+        [Priorities.Medium]: clsx(
+            styles.toDo,
+            styles.medium,
+            toDo.new && styles.newToDo,
+        ),
+        [Priorities.High]: clsx(
+            styles.toDo,
+            styles.high,
+            toDo.new && styles.newToDo,
+        ),
     };
 
     const classes = priorityClasses[toDo.priority];
@@ -23,6 +35,7 @@ function ToDo({ toDo, onRemoveTodo }) {
             name="todo"
             value={toDo.id}
         >
+            {toDo.new && 'NEW-    '}
             {toDo.task}
             -BY {toDo.dueMonth}/2023
             <button onClick={handleButtonPress} type="button">
