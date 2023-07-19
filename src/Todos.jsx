@@ -57,8 +57,10 @@ function Todos() {
     useEffect(() => {
         fetchData();
     }, [fetchData]);
+
     const filterToDoList = useCallback(
-        (searchTerm) => {
+        (e) => {
+            const searchTerm = e.target.value;
             setToDoList(
                 toDoList.map((toDo) => {
                     const regex = new RegExp(searchTerm, 'i');
