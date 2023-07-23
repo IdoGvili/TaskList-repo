@@ -7,7 +7,7 @@ function ToDoForm({ onAddTodo }) {
     const [userInput, setUserInput] = useState({
         task: '',
         date: '1',
-        priority: ToDo.priorities.Low,
+        priority: ToDo.priorities.LOW,
     });
 
     const handleChange = (e) => {
@@ -26,15 +26,7 @@ function ToDoForm({ onAddTodo }) {
         onAddTodo(userInput);
         setUserInput({ task: '', date: '1', priority: ToDo.priorities.Low });
     };
-    const priorityOptions = [
-        { value: ToDo.priorities.Low, label: 'Low', className: styles.low },
-        {
-            value: ToDo.priorities.Medium,
-            label: 'Medium',
-            className: styles.medium,
-        },
-        { value: ToDo.priorities.High, label: 'High', className: styles.high },
-    ];
+
     const classLow = clsx(styles.low);
     const classMedium = clsx(styles.medium);
     const classHigh = clsx(styles.high);
@@ -58,19 +50,19 @@ function ToDoForm({ onAddTodo }) {
                         id="priority"
                     >
                         <option
-                            value={ToDo.priorities.Low}
+                            value={ToDo.priorities.LOW}
                             className={classLow}
                         >
                             Low
                         </option>
                         <option
-                            value={ToDo.priorities.Medium}
+                            value={ToDo.priorities.MEDIUM}
                             className={classMedium}
                         >
                             Medium
                         </option>
                         <option
-                            value={ToDo.priorities.High}
+                            value={ToDo.priorities.HIGH}
                             className={classHigh}
                         >
                             High

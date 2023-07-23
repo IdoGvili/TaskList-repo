@@ -52,7 +52,7 @@ function Todos() {
             ...toDo,
             id: v4(),
             show: true,
-            priority: ToDo.priorities.Low,
+            priority: ToDo.priorities.LOW,
         }));
 
         setToDoList(newData);

@@ -3,9 +3,9 @@ import { clsx } from 'clsx';
 import styles from './styles/ToDo.module.css';
 
 const priorities = {
-    Low: 'low',
-    Medium: 'medium',
-    High: 'high',
+    LOW: 'low',
+    MEDIUM: 'medium',
+    HIGH: 'high',
 };
 
 function ToDo({ toDo, onRemoveTodo }) {
@@ -13,34 +13,24 @@ function ToDo({ toDo, onRemoveTodo }) {
         e.preventDefault();
         onRemoveTodo(e.currentTarget.parentNode);
     };
-    // option 1
-    function priorityStyles(priority) {
-        if (priority === priorities.Low) {
-            return styles.low;
-        }
-        if (priority === priorities.Medium) {
-            return styles.medium;
-        }
-        return styles.high;
-    }
-    const classes = clsx(
-        styles.toDo,
-        toDo.new && styles.newToDo,
-        priorityStyles(toDo.priority),
-    );
-    // option 2
-    const classes2 = clsx(
-        styles.toDo,
-        toDo.new && styles.newToDo,
-        toDo.priority === priorities.Low && styles.low,
-        toDo.priority === priorities.Medium && styles.medium,
-        toDo.priority === priorities.High && styles.high,
-    );
+
+    const classes = clsx(styles.toDo, {
+        [styles.newToDo]: toDo.new,
+        [styles.low]: toDo.priority === priorities.LOW,
+        [styles.medium]: toDo.priority === priorities.MEDIUM,
+        [styles.high]: toDo.priority === priorities.HIGH,
+    });
+
     return (
         <div
             id={toDo.id}
             key={toDo.id + toDo.task}
-            className={classes2}
+            className={clsx(styles.toDo, {
+                [styles.newToDo]: !!toDo.new,
+                [styles.low]: toDo.priority === priorities.LOW,
+                [styles.medium]: toDo.priority === priorities.MEDIUM,
+                [styles.high]: toDo.priority === priorities.HIGH,
+            })}
             name="todo"
             value={toDo.id}
         >
