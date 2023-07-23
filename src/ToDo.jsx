@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, styled } from '@mui/material';
+import { Stack, Button, styled } from '@mui/material';
 
 import theme from './Theme';
 
@@ -28,7 +28,7 @@ function ToDo({ toDo, onRemoveTodo }) {
 
         return theme.palette.priority.high;
     }
-    const NewBox = styled(Box)((props) => ({
+    const NewBox = styled(Stack)((props) => ({
         backgroundColor: 'RGB(247, 202, 201)',
         borderStyle: 'solid',
         borderRadius: '25px',
@@ -49,14 +49,21 @@ function ToDo({ toDo, onRemoveTodo }) {
             value={toDo.id}
             priority={toDo.priority}
             isNew={toDo.new}
+            direction="row"
+            justifyContent="space-between"
         >
             {toDo.new && 'NEW-    '}
             {toDo.task}
             -BY {toDo.dueMonth}/2023
-            <button onClick={handleButtonPress} type="button">
+            <Button
+                onClick={handleButtonPress}
+                variant="contained"
+                size="small"
+                type="button"
+            >
                 {' '}
                 delete
-            </button>
+            </Button>
         </NewBox>
     );
 }
