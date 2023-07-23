@@ -14,13 +14,6 @@ function ToDo({ toDo, onRemoveTodo }) {
         onRemoveTodo(e.currentTarget.parentNode);
     };
 
-    const classes = clsx(styles.toDo, {
-        [styles.newToDo]: toDo.new,
-        [styles.low]: toDo.priority === priorities.LOW,
-        [styles.medium]: toDo.priority === priorities.MEDIUM,
-        [styles.high]: toDo.priority === priorities.HIGH,
-    });
-
     return (
         <div
             id={toDo.id}
