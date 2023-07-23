@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
+import { Button } from '@mui/material';
+
+import AddIcon from '@mui/icons-material/Add';
+
 import ToDo from './ToDo';
-import styles from './styles/ToDoForm.module.css';
 
 function ToDoForm({ onAddTodo }) {
     const [userInput, setUserInput] = useState({
@@ -27,12 +29,10 @@ function ToDoForm({ onAddTodo }) {
         setUserInput({ task: '', date: '1', priority: ToDo.priorities.Low });
     };
 
-    const classLow = clsx(styles.low);
-    const classMedium = clsx(styles.medium);
-    const classHigh = clsx(styles.high);
     return (
         <>
             <h3> New Task:</h3>
+
             <form onSubmit={handleSubmit}>
                 <input
                     value={userInput.task}
@@ -40,7 +40,14 @@ function ToDoForm({ onAddTodo }) {
                     onChange={handleChange}
                     placeholder="Enter task..."
                 />
-                <button type="submit">Submit</button>
+                <Button
+                    variant="contained"
+                    endIcon={<AddIcon />}
+                    size="small"
+                    type="submit"
+                >
+                    Submit
+                </Button>
                 <br />
                 <label htmlFor="priority">
                     Priority:
@@ -49,24 +56,9 @@ function ToDoForm({ onAddTodo }) {
                         name="priority"
                         id="priority"
                     >
-                        <option
-                            value={ToDo.priorities.LOW}
-                            className={classLow}
-                        >
-                            Low
-                        </option>
-                        <option
-                            value={ToDo.priorities.MEDIUM}
-                            className={classMedium}
-                        >
-                            Medium
-                        </option>
-                        <option
-                            value={ToDo.priorities.HIGH}
-                            className={classHigh}
-                        >
-                            High
-                        </option>
+                        <option value={ToDo.priorities.LOW}>Low</option>
+                        <option value={ToDo.priorities.MEDIUM}>Medium</option>
+                        <option value={ToDo.priorities.HIGH}>High</option>
                     </select>
                 </label>
                 <label htmlFor="month">
