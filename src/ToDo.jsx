@@ -20,8 +20,8 @@ const NewBox = styled(Stack)((props) => ({
     margin: 'auto',
     fontWeight: 'bold',
 
-    direction: 'ltr',
-    justifyContent: 'space-between',
+    direction: props.direction,
+    justifyContent: props.justifyContent,
     color: theme.palette.priority[props.priority],
     borderColor: props.isNew && theme.palette.priority.new,
 }));
