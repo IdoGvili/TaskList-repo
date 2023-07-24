@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
 import { Button, TextField, Select, MenuItem, styled } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import theme from './Theme';
-
+import theme from './theme';
 import ToDo from './ToDo';
 
-function ToDoForm({ onAddTodo }) {
-    const [userInput, setUserInput] = useState({
-        task: '',
-        date: '1',
-        priority: ToDo.priorities.LOW,
-    });
+const styles = { backgroundColor: theme.palette.form.field };
 
-    const handleChange = (e) => {
-        setUserInput({ ...userInput, task: e.target.value });
+function ToDoForm({ addTodo }) {
+    const [task, setTask] = useState('');
+    const [date, setDate] = useState(1);
+    const [priority, setPriority] = useState(ToDo.priorities.LOW);
+
+    const onTaskChange = (e) => {
+        setTask(e.target.value);
     };
-    const handleChangeDate = (e) => {
-        setUserInput({ ...userInput, date: e.target.value });
+    const onDateChange = (e) => {
+        setDate(e.target.value);
     };
-    const handleChangePriority = (e) => {
-        setUserInput({ ...userInput, priority: e.target.value });
+    const onPriorityChange = (e) => {
+        setPriority(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const onSubmitTodo = (e) => {
         e.preventDefault();
-
-        onAddTodo(userInput);
-        setUserInput({ task: '', date: '1', priority: ToDo.priorities.LOW });
+        addTodo(task, date, priority);
+        setTask('');
+        setDate(1);
+        setPriority(ToDo.priorities.LOW);
     };
     function priorityColor(props) {
         if (props === ToDo.priorities.LOW) return theme.palette.priority.low;
@@ -38,20 +38,20 @@ function ToDoForm({ onAddTodo }) {
     const PriorityMenuItem = styled(MenuItem)((props) => ({
         color: priorityColor(props.color),
     }));
-    const styles = { backgroundColor: theme.palette.form.field };
+
     return (
         <>
             <h3> New Task:</h3>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmitTodo}>
                 <TextField
                     label="enter task..."
-                    style={styles}
-                    value={userInput.task}
+                    sx={styles}
+                    value={task}
                     type="text"
                     variant="filled"
                     color="secondary"
-                    onChange={handleChange}
+                    onChange={onTaskChange}
                     placeholder="Enter task..."
                 />
                 <Button
@@ -65,11 +65,11 @@ function ToDoForm({ onAddTodo }) {
                 </Button>
                 <br />
                 <Select
-                    style={styles}
-                    onChange={handleChangePriority}
+                    sx={styles}
+                    onChange={onPriorityChange}
                     label="priority"
                     id="priority"
-                    value={userInput.priority}
+                    value={priority}
                 >
                     <PriorityMenuItem
                         color={ToDo.priorities.LOW}
@@ -91,11 +91,11 @@ function ToDoForm({ onAddTodo }) {
                     </PriorityMenuItem>
                 </Select>
                 <Select
-                    style={styles}
-                    onChange={handleChangeDate}
+                    sx={styles}
+                    onChange={onDateChange}
                     name="month"
                     id="month"
-                    value={userInput.date}
+                    value={date}
                 >
                     <MenuItem value="1">1</MenuItem>
                     <MenuItem value="2">2</MenuItem>

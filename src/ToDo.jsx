@@ -2,12 +2,31 @@ import React from 'react';
 
 import { Stack, Button, styled } from '@mui/material';
 
-import theme from './Theme';
+import theme from './theme';
 
 const priorities = {
     LOW: 'low',
     MEDIUM: 'medium',
     HIGH: 'high',
+};
+
+const NewBox = styled(Stack)((props) => ({
+    backgroundColor: 'RGB(247, 202, 201)',
+    borderStyle: 'solid',
+    borderRadius: '25px',
+    padding: '10px',
+    width: '400px',
+    height: '30px',
+    margin: 'auto',
+    fontWeight: 'bold',
+
+    direction: 'ltr',
+    justifyContent: 'space-between',
+    color: theme.palette.priority[props.priority],
+    borderColor: props.isNew && theme.palette.priority.new,
+}));
+const deleteButtonStyle = {
+    paddingLeft: '12px',
 };
 
 function ToDo({ toDo, onRemoveTodo }) {
@@ -22,29 +41,10 @@ function ToDo({ toDo, onRemoveTodo }) {
                 [styles.medium]: toDo.priority === priorities.MEDIUM,
                 [styles.high]: toDo.priority === priorities.HIGH,
             })} */
-    function priorityColor(props) {
-        if (props === priorities.LOW) return theme.palette.priority.low;
-        if (props === priorities.MEDIUM) return theme.palette.priority.medium;
-
-        return theme.palette.priority.high;
-    }
-    const NewBox = styled(Stack)((props) => ({
-        backgroundColor: 'RGB(247, 202, 201)',
-        borderStyle: 'solid',
-        borderRadius: '25px',
-        padding: '10px',
-        width: '400px',
-        height: '30px',
-        margin: 'auto',
-        fontWeight: 'bold',
-        color: priorityColor(props.priority),
-        borderColor: props.isNew && theme.palette.priority.new,
-    }));
 
     return (
         <NewBox
             id={toDo.id}
-            key={toDo.id + toDo.task}
             name="todo"
             value={toDo.id}
             priority={toDo.priority}
@@ -60,8 +60,8 @@ function ToDo({ toDo, onRemoveTodo }) {
                 variant="contained"
                 size="small"
                 type="button"
+                sx={deleteButtonStyle}
             >
-                {' '}
                 delete
             </Button>
         </NewBox>

@@ -4,7 +4,7 @@ import { ThemeProvider } from '@emotion/react';
 import GlobalStyles from '@mui/material/GlobalStyles';
 
 import App from './App';
-import theme from './Theme';
+import theme from './theme';
 
 const inputGlobalStyles = (
     <GlobalStyles

@@ -22,9 +22,9 @@ function Todos() {
         setToDoList(filtered);
     };
 
-    const onAddTodo = ({ task: newTask, date, priority: newPriority }) => {
-        const before = toDoList.filter((toDo) => toDo.dueMonth < date);
-        const after = toDoList.filter((toDo) => toDo.dueMonth >= date);
+    const addTodo = (newTask, newDate, newPriority) => {
+        const before = toDoList.filter((toDo) => toDo.dueMonth < newDate);
+        const after = toDoList.filter((toDo) => toDo.dueMonth >= newDate);
 
         const copy = [
             ...before,
@@ -32,7 +32,7 @@ function Todos() {
                 id: v4(),
                 task: newTask,
                 complete: false,
-                dueMonth: date,
+                dueMonth: newDate,
                 new: true,
                 show: true,
                 priority: newPriority,
@@ -54,7 +54,7 @@ function Todos() {
             show: true,
             priority: ToDo.priorities.LOW,
         }));
-
+        console.log('fdf');
         setToDoList(newData);
     }, []);
     useEffect(() => {
@@ -79,7 +79,7 @@ function Todos() {
     return (
         <>
             <ToDoList toDoList={toDoList} onRemoveTodo={onRemoveTodo} />
-            <ToDoForm onAddTodo={onAddTodo} />
+            <ToDoForm addTodo={addTodo} />
             <Search filterToDoList={filterToDoList} />
         </>
     );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import theme from './Theme';
+import theme from './theme';
 
+const styles = { backgroundColor: theme.palette.form.field };
 function Search({ filterToDoList }) {
-    const styles = { backgroundColor: theme.palette.form.field };
     return (
         <div>
             <h3>Search</h3>
