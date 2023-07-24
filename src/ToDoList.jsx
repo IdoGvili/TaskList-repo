@@ -14,13 +14,10 @@ export default function ToDoList({ toDoList, onRemoveTodo }) {
                 <Stack
                     spacing={1}
                     divider={<Divider orientation="horizontal" flexItem />}
+                    key={toDo.id}
                 >
                     {toDo.show && (
-                        <ToDo
-                            toDo={toDo}
-                            onRemoveTodo={onRemoveTodo}
-                            key={toDo.id}
-                        />
+                        <ToDo toDo={toDo} onRemoveTodo={onRemoveTodo} />
                     )}
                 </Stack>
             ))}

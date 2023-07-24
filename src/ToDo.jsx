@@ -54,7 +54,7 @@ function ToDo({ toDo, onRemoveTodo }) {
         >
             {toDo.new && 'NEW-    '}
             {toDo.task}
-            -BY {toDo.dueMonth}/2023
+            -BY {toDo.dueMonth}
             <Button
                 onClick={handleButtonPress}
                 variant="contained"

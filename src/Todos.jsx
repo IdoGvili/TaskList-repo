@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { v4 } from 'uuid';
-
+import DatePicker from 'react-datepicker';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 import Search from './Search';
@@ -53,8 +53,9 @@ function Todos() {
             id: v4(),
             show: true,
             priority: ToDo.priorities.LOW,
+            dueMonth: new Date().toLocaleDateString(),
         }));
-        console.log('fdf');
+
         setToDoList(newData);
     }, []);
     useEffect(() => {

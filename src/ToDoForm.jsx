@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField, Select, MenuItem, styled } from '@mui/material';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 import AddIcon from '@mui/icons-material/Add';
 import theme from './theme';
 import ToDo from './ToDo';
@@ -8,14 +11,14 @@ const styles = { backgroundColor: theme.palette.form.field };
 
 function ToDoForm({ addTodo }) {
     const [task, setTask] = useState('');
-    const [date, setDate] = useState(1);
+    const [date, setDate] = useState(new Date());
     const [priority, setPriority] = useState(ToDo.priorities.LOW);
 
     const onTaskChange = (e) => {
         setTask(e.target.value);
     };
-    const onDateChange = (e) => {
-        setDate(e.target.value);
+    const onDateChange = (newDate) => {
+        setDate(newDate);
     };
     const onPriorityChange = (e) => {
         setPriority(e.target.value);
@@ -23,9 +26,9 @@ function ToDoForm({ addTodo }) {
 
     const onSubmitTodo = (e) => {
         e.preventDefault();
-        addTodo(task, date, priority);
+        addTodo(task, date.toLocaleDateString(), priority);
         setTask('');
-        setDate(1);
+        setDate(new Date());
         setPriority(ToDo.priorities.LOW);
     };
     function priorityColor(props) {
@@ -90,27 +93,7 @@ function ToDoForm({ addTodo }) {
                         High
                     </PriorityMenuItem>
                 </Select>
-                <Select
-                    sx={styles}
-                    onChange={onDateChange}
-                    name="month"
-                    id="month"
-                    value={date}
-                >
-                    <MenuItem value="1">1</MenuItem>
-                    <MenuItem value="2">2</MenuItem>
-                    <MenuItem value="3">3</MenuItem>
-                    <MenuItem value="4">4</MenuItem>
-                    <MenuItem value="5">5</MenuItem>
-                    <MenuItem value="6">6</MenuItem>
-                    <MenuItem value="7">7</MenuItem>
-                    <MenuItem value="8">8</MenuItem>
-                    <MenuItem value="9">9</MenuItem>
-                    <MenuItem value="10">10</MenuItem>
-                    <MenuItem value="11">11</MenuItem>
-                    <MenuItem value="12">12</MenuItem>
-                </Select>
-                /2023
+                <DatePicker selected={date} onChange={onDateChange} />
             </form>
         </>
     );
