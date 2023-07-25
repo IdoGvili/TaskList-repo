@@ -8,19 +8,6 @@ const priorities = {
     HIGH: 'high',
 };
 
-const NewStack = styled(Stack)(({ theme, priority, isNew }) => ({
-    backgroundColor: '#F7CAC9',
-    borderStyle: 'solid',
-    borderRadius: '25px',
-    padding: '10px',
-    width: '400px',
-    height: '30px',
-    margin: 'auto',
-    fontWeight: '700',
-
-    color: theme.palette.priority[priority],
-    borderColor: isNew ? theme.palette.priority.new : '',
-}));
 const deleteButtonStyle = {
     paddingLeft: '12px',
 };
@@ -39,15 +26,7 @@ function ToDo({ toDo, onRemoveTodo }) {
             })} */
 
     return (
-        <NewStack
-            id={toDo.id}
-            name="todo"
-            value={toDo.id}
-            priority={toDo.priority}
-            isNew={toDo.new}
-            direction="row"
-            justifyContent="space-between"
-        >
+        <StackTest toDo={toDo}>
             {toDo.new && 'NEW-    '}
             {toDo.task}
             -BY {toDo.dueMonth}
@@ -60,6 +39,34 @@ function ToDo({ toDo, onRemoveTodo }) {
             >
                 delete
             </Button>
+        </StackTest>
+    );
+}
+function StackTest({ toDo, children }) {
+    const NewStack = styled(Stack)(({ theme, priority, isNew }) => ({
+        backgroundColor: '#F7CAC9',
+        borderStyle: 'solid',
+        borderRadius: '25px',
+        padding: '10px',
+        width: '400px',
+        height: '30px',
+        margin: 'auto',
+        fontWeight: '700',
+
+        color: theme.palette.priority[priority],
+        borderColor: isNew ? theme.palette.priority.new : '',
+    }));
+    return (
+        <NewStack
+            id={toDo.id}
+            name="todo"
+            value={toDo.id}
+            priority={toDo.priority}
+            isNew={toDo.new}
+            direction="row"
+            justifyContent="space-between"
+        >
+            {children}
         </NewStack>
     );
 }
