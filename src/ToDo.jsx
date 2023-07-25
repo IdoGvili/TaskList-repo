@@ -9,14 +9,14 @@ const priorities = {
 };
 
 const NewStack = styled(Stack)(({ theme, priority, isNew }) => ({
-    backgroundColor: 'RGB(247, 202, 201)',
+    backgroundColor: '#F7CAC9',
     borderStyle: 'solid',
     borderRadius: '25px',
     padding: '10px',
     width: '400px',
     height: '30px',
     margin: 'auto',
-    fontWeight: 'bold',
+    fontWeight: '700',
 
     color: theme.palette.priority[priority],
     borderColor: isNew ? theme.palette.priority.new : '',
