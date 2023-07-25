@@ -2,15 +2,13 @@ import React from 'react';
 
 import { Stack, Button, styled } from '@mui/material';
 
-import theme from './theme';
-
 const priorities = {
     LOW: 'low',
     MEDIUM: 'medium',
     HIGH: 'high',
 };
 
-const NewBox = styled(Stack)((props) => ({
+const NewStack = styled(Stack)(({ theme, priority, isNew }) => ({
     backgroundColor: 'RGB(247, 202, 201)',
     borderStyle: 'solid',
     borderRadius: '25px',
@@ -20,10 +18,8 @@ const NewBox = styled(Stack)((props) => ({
     margin: 'auto',
     fontWeight: 'bold',
 
-    direction: props.direction,
-    justifyContent: props.justifyContent,
-    color: theme.palette.priority[props.priority],
-    borderColor: props.isNew && theme.palette.priority.new,
+    color: theme.palette.priority[priority],
+    borderColor: isNew ? theme.palette.priority.new : '',
 }));
 const deleteButtonStyle = {
     paddingLeft: '12px',
@@ -43,7 +39,7 @@ function ToDo({ toDo, onRemoveTodo }) {
             })} */
 
     return (
-        <NewBox
+        <NewStack
             id={toDo.id}
             name="todo"
             value={toDo.id}
@@ -64,7 +60,7 @@ function ToDo({ toDo, onRemoveTodo }) {
             >
                 delete
             </Button>
-        </NewBox>
+        </NewStack>
     );
 }
 ToDo.priorities = priorities;
