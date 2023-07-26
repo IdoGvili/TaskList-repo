@@ -13,17 +13,10 @@ const deleteButtonStyle = {
 };
 
 function ToDo({ toDo, onRemoveTodo }) {
-    const handleButtonPress = (e) => {
+    const onDeleteHandle = (e) => {
         e.preventDefault();
         onRemoveTodo(e.currentTarget.parentNode);
     };
-
-    /*    className={clsx(styles.toDo, {
-                [styles.newToDo]: !!toDo.new,
-                [styles.low]: toDo.priority === priorities.LOW,
-                [styles.medium]: toDo.priority === priorities.MEDIUM,
-                [styles.high]: toDo.priority === priorities.HIGH,
-            })} */
 
     return (
         <StackTest toDo={toDo}>
@@ -31,7 +24,7 @@ function ToDo({ toDo, onRemoveTodo }) {
             {toDo.task}
             -BY {toDo.dueMonth}
             <Button
-                onClick={handleButtonPress}
+                onClick={onDeleteHandle}
                 variant="contained"
                 size="small"
                 type="button"
@@ -42,8 +35,12 @@ function ToDo({ toDo, onRemoveTodo }) {
         </StackTest>
     );
 }
+function RowStack(props) {
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    return <Stack {...props} direction="row" justifyContent="space-between" />;
+}
 function StackTest({ toDo, children }) {
-    const NewStack = styled(Stack)(({ theme, priority, isNew }) => ({
+    const NewStack = styled(RowStack)(({ theme, priority, isNew }) => ({
         backgroundColor: '#F7CAC9',
         borderStyle: 'solid',
         borderRadius: '25px',
@@ -52,7 +49,6 @@ function StackTest({ toDo, children }) {
         height: '30px',
         margin: 'auto',
         fontWeight: '700',
-
         color: theme.palette.priority[priority],
         borderColor: isNew ? theme.palette.priority.new : '',
     }));
@@ -63,13 +59,12 @@ function StackTest({ toDo, children }) {
             value={toDo.id}
             priority={toDo.priority}
             isNew={toDo.new}
-            direction="row"
-            justifyContent="space-between"
         >
             {children}
         </NewStack>
     );
 }
+
 ToDo.priorities = priorities;
 
 export default ToDo;

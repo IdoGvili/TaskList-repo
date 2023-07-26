@@ -7,8 +7,6 @@ import AddIcon from '@mui/icons-material/Add';
 import theme from './theme';
 import ToDo from './ToDo';
 
-const styles = { backgroundColor: theme.palette.form.field };
-
 function ToDoForm({ addTodo }) {
     const [task, setTask] = useState('');
     const [date, setDate] = useState(new Date());
@@ -23,23 +21,20 @@ function ToDoForm({ addTodo }) {
     const onPriorityChange = (e) => {
         setPriority(e.target.value);
     };
-
-    const onSubmitTodo = (e) => {
-        e.preventDefault();
-        addTodo(task, date.toLocaleDateString(), priority);
+    const resetStateOnSubmit = () => {
         setTask('');
         setDate(new Date());
         setPriority(ToDo.priorities.LOW);
     };
-    function priorityColor(props) {
-        if (props === ToDo.priorities.LOW) return theme.palette.priority.low;
-        if (props === ToDo.priorities.MEDIUM)
-            return theme.palette.priority.medium;
 
-        return theme.palette.priority.high;
-    }
+    const onSubmitTodo = (e) => {
+        e.preventDefault();
+        addTodo(task, date.toLocaleDateString(), priority);
+        resetStateOnSubmit();
+    };
+
     const PriorityMenuItem = styled(MenuItem)((props) => ({
-        color: priorityColor(props.color),
+        color: theme.palette.priority[props.color],
     }));
 
     return (
@@ -49,7 +44,7 @@ function ToDoForm({ addTodo }) {
             <form onSubmit={onSubmitTodo}>
                 <TextField
                     label="enter task..."
-                    sx={styles}
+                    sx={{ bgcolor: theme.palette.form.field }}
                     value={task}
                     type="text"
                     variant="filled"
@@ -68,7 +63,7 @@ function ToDoForm({ addTodo }) {
                 </Button>
                 <br />
                 <Select
-                    sx={styles}
+                    sx={{ bgcolor: theme.palette.form.field }}
                     onChange={onPriorityChange}
                     label="priority"
                     id="priority"
