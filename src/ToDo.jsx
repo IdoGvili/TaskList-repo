@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { PropTypes } from 'prop-types';
 import { Stack, Button, styled } from '@mui/material';
 
 const priorities = {
@@ -35,6 +35,20 @@ function ToDo({ toDo, onRemoveTodo }) {
         </StackTest>
     );
 }
+ToDo.propTypes = {
+    toDo: PropTypes.shape({
+        task: PropTypes.string,
+        dueMonth: PropTypes.string,
+        id: PropTypes.string,
+        show: PropTypes.bool,
+        priority: PropTypes.string,
+    }),
+    onRemoveTodo: PropTypes.func,
+};
+ToDo.defaultProps = {
+    toDo: {},
+    onRemoveTodo: () => {},
+};
 function RowStack(props) {
     // eslint-disable-next-line react/jsx-props-no-spreading
     return <Stack {...props} direction="row" justifyContent="space-between" />;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Select, MenuItem, styled } from '@mui/material';
 import DatePicker from 'react-datepicker';
-
+import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
 import AddIcon from '@mui/icons-material/Add';
 import theme from './theme';
@@ -93,5 +93,11 @@ function ToDoForm({ addTodo }) {
         </>
     );
 }
+ToDoForm.propTypes = {
+    addTodo: PropTypes.func,
+};
+ToDoForm.defaultProps = {
+    addTodo: () => {},
+};
 
 export default ToDoForm;

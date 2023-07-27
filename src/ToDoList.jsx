@@ -1,6 +1,7 @@
 import React from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import { Stack, Divider } from '@mui/material';
+import { PropTypes } from 'prop-types';
 import ToDo from './ToDo';
 
 export default function ToDoList({ toDoList, onRemoveTodo }) {
@@ -24,6 +25,14 @@ export default function ToDoList({ toDoList, onRemoveTodo }) {
         </div>
     );
 }
+ToDoList.propTypes = {
+    toDoList: PropTypes.PropTypes.arrayOf(PropTypes.object),
+    onRemoveTodo: PropTypes.func,
+};
+ToDoList.defaultProps = {
+    toDoList: [],
+    onRemoveTodo: () => {},
+};
 function Loading() {
     return (
         <>

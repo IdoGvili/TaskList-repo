@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextField } from '@mui/material';
+import { PropTypes } from 'prop-types';
 import theme from './theme';
 
 function Search({ filterToDoList }) {
@@ -15,5 +16,11 @@ function Search({ filterToDoList }) {
         </div>
     );
 }
+Search.propTypes = {
+    filterToDoList: PropTypes.func,
+};
+Search.defaultProps = {
+    filterToDoList: () => {},
+};
 
 export default Search;
