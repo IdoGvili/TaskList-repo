@@ -26,7 +26,15 @@ export default function ToDoList({ toDoList, onRemoveTodo }) {
     );
 }
 ToDoList.propTypes = {
-    toDoList: PropTypes.PropTypes.arrayOf(PropTypes.object),
+    toDoList: PropTypes.arrayOf(
+        PropTypes.shape({
+            task: PropTypes.string,
+            dueMonth: PropTypes.string,
+            id: PropTypes.string,
+            show: PropTypes.bool,
+            priority: PropTypes.string,
+        }),
+    ),
     onRemoveTodo: PropTypes.func,
 };
 ToDoList.defaultProps = {
