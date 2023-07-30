@@ -25,7 +25,7 @@ module.exports = {
     rules: {
         'react/prop-types': 'off',
         'no-unused-vars': 'warn',
-        indent: ['error', 4],
+        indent: ['error', 4, { SwitchCase: 1 }],
 
         'no-multiple-empty-lines': 'error',
     },

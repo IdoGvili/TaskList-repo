@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { v4 } from 'uuid';
-
+import DatePicker from 'react-datepicker';
 import ToDoList from './ToDoList';
 import ToDoForm from './ToDoForm';
 import Search from './Search';
+import ToDo from './ToDo';
 
 function Todos() {
     const [toDoList, setToDoList] = useState(null);
@@ -21,9 +22,9 @@ function Todos() {
         setToDoList(filtered);
     };
 
-    const onAddTodo = ({ task: newTask, date }) => {
-        const before = toDoList.filter((toDo) => toDo.dueMonth < date);
-        const after = toDoList.filter((toDo) => toDo.dueMonth >= date);
+    const addTodo = (newTask, newDate, newPriority) => {
+        const before = toDoList.filter((toDo) => toDo.dueMonth < newDate);
+        const after = toDoList.filter((toDo) => toDo.dueMonth >= newDate);
 
         const copy = [
             ...before,
@@ -31,9 +32,10 @@ function Todos() {
                 id: v4(),
                 task: newTask,
                 complete: false,
-                dueMonth: date,
+                dueMonth: newDate,
                 new: true,
                 show: true,
+                priority: newPriority,
             },
             ...after,
         ];
@@ -50,6 +52,8 @@ function Todos() {
             ...toDo,
             id: v4(),
             show: true,
+            priority: ToDo.priorities.LOW,
+            dueMonth: new Date().toLocaleDateString(),
         }));
 
         setToDoList(newData);
@@ -76,7 +80,7 @@ function Todos() {
     return (
         <>
             <ToDoList toDoList={toDoList} onRemoveTodo={onRemoveTodo} />
-            <ToDoForm onAddTodo={onAddTodo} />
+            <ToDoForm addTodo={addTodo} />
             <Search filterToDoList={filterToDoList} />
         </>
     );

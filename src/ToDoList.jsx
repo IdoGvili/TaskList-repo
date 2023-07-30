@@ -1,5 +1,7 @@
 import React from 'react';
 import { ColorRing } from 'react-loader-spinner';
+import { Stack, Divider } from '@mui/material';
+import { PropTypes } from 'prop-types';
 import ToDo from './ToDo';
 
 export default function ToDoList({ toDoList, onRemoveTodo }) {
@@ -9,19 +11,36 @@ export default function ToDoList({ toDoList, onRemoveTodo }) {
         </div>
     ) : (
         <div>
-            {toDoList.map(
-                (toDo) =>
-                    toDo.show && (
-                        <ToDo
-                            toDo={toDo}
-                            onRemoveTodo={onRemoveTodo}
-                            key={toDo.id}
-                        />
-                    ),
-            )}
+            {toDoList.map((toDo) => (
+                <Stack
+                    spacing={1}
+                    divider={<Divider orientation="horizontal" flexItem />}
+                    key={toDo.id}
+                >
+                    {toDo.show && (
+                        <ToDo toDo={toDo} onRemoveTodo={onRemoveTodo} />
+                    )}
+                </Stack>
+            ))}
         </div>
     );
 }
+ToDoList.propTypes = {
+    toDoList: PropTypes.arrayOf(
+        PropTypes.shape({
+            task: PropTypes.string,
+            dueMonth: PropTypes.string,
+            id: PropTypes.string,
+            show: PropTypes.bool,
+            priority: PropTypes.string,
+        }),
+    ),
+    onRemoveTodo: PropTypes.func,
+};
+ToDoList.defaultProps = {
+    toDoList: [],
+    onRemoveTodo: () => {},
+};
 function Loading() {
     return (
         <>

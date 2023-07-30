@@ -1,57 +1,103 @@
 import React, { useState } from 'react';
+import { Button, TextField, Select, MenuItem, styled } from '@mui/material';
+import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
+import 'react-datepicker/dist/react-datepicker.css';
+import AddIcon from '@mui/icons-material/Add';
+import theme from './theme';
+import ToDo from './ToDo';
 
-function ToDoForm({ onAddTodo }) {
-    const [userInput, setUserInput] = useState({
-        task: '',
-        date: '1',
-    });
+function ToDoForm({ addTodo }) {
+    const [task, setTask] = useState('');
+    const [date, setDate] = useState(new Date());
+    const [priority, setPriority] = useState(ToDo.priorities.LOW);
 
-    const handleChange = (e) => {
-        setUserInput({ task: e.currentTarget.value, date: userInput.date });
+    const onTaskChange = (e) => {
+        setTask(e.target.value);
     };
-    const handleChangeDate = (e) => {
-        setUserInput({ date: e.currentTarget.value, task: userInput.task });
+    const onDateChange = (newDate) => {
+        setDate(newDate);
+    };
+    const onPriorityChange = (e) => {
+        setPriority(e.target.value);
+    };
+    const resetStateOnSubmit = () => {
+        setTask('');
+        setDate(new Date());
+        setPriority(ToDo.priorities.LOW);
     };
 
-    const handleSubmit = (e) => {
+    const onSubmitTodo = (e) => {
         e.preventDefault();
-
-        onAddTodo(userInput);
-        setUserInput({ task: '', date: '1' });
+        addTodo(task, date.toLocaleDateString(), priority);
+        resetStateOnSubmit();
     };
+
+    const PriorityMenuItem = styled(MenuItem)((props) => ({
+        color: theme.palette.priority[props.color],
+    }));
+
     return (
         <>
             <h3> New Task:</h3>
-            <form onSubmit={handleSubmit}>
-                <input
-                    value={userInput.task}
+
+            <form onSubmit={onSubmitTodo}>
+                <TextField
+                    label="enter task..."
+                    sx={{ bgcolor: theme.palette.form.field }}
+                    value={task}
                     type="text"
-                    onChange={handleChange}
+                    variant="filled"
+                    color="secondary"
+                    onChange={onTaskChange}
                     placeholder="Enter task..."
                 />
-                <button type="submit">Submit</button>
+                <Button
+                    variant="contained"
+                    endIcon={<AddIcon />}
+                    size="small"
+                    type="submit"
+                    color="secondary"
+                >
+                    Submit
+                </Button>
                 <br />
-                <label htmlFor="month">
-                    Due month:
-                    <select onChange={handleChangeDate} name="month" id="month">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                </label>
-                /2023
+                <Select
+                    sx={{ bgcolor: theme.palette.form.field }}
+                    onChange={onPriorityChange}
+                    label="priority"
+                    id="priority"
+                    value={priority}
+                >
+                    <PriorityMenuItem
+                        color={ToDo.priorities.LOW}
+                        value={ToDo.priorities.LOW}
+                    >
+                        Low
+                    </PriorityMenuItem>
+                    <PriorityMenuItem
+                        value={ToDo.priorities.MEDIUM}
+                        color={ToDo.priorities.MEDIUM}
+                    >
+                        Medium
+                    </PriorityMenuItem>
+                    <PriorityMenuItem
+                        color={ToDo.priorities.HIGH}
+                        value={ToDo.priorities.HIGH}
+                    >
+                        High
+                    </PriorityMenuItem>
+                </Select>
+                <DatePicker selected={date} onChange={onDateChange} />
             </form>
         </>
     );
 }
+ToDoForm.propTypes = {
+    addTodo: PropTypes.func,
+};
+ToDoForm.defaultProps = {
+    addTodo: () => {},
+};
 
 export default ToDoForm;

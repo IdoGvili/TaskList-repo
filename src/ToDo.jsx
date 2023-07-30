@@ -1,32 +1,84 @@
 import React from 'react';
-import styles from './styles/ToDo.module.css';
+import { PropTypes } from 'prop-types';
+import { Stack, Button, styled } from '@mui/material';
+
+const priorities = {
+    LOW: 'low',
+    MEDIUM: 'medium',
+    HIGH: 'high',
+};
+
+const deleteButtonStyle = {
+    paddingLeft: '12px',
+};
 
 function ToDo({ toDo, onRemoveTodo }) {
-    const handleButtonPress = (e) => {
+    const onDeleteHandle = (e) => {
         e.preventDefault();
         onRemoveTodo(e.currentTarget.parentNode);
     };
 
-    let className = styles.toDo;
-    if (toDo.new) {
-        className = styles.newToDo;
-    }
     return (
-        <div
-            id={toDo.id}
-            key={toDo.id + toDo.task}
-            className={className}
-            name="todo"
-            value={toDo.id}
-        >
+        <StackTest toDo={toDo}>
+            {toDo.new && 'NEW-    '}
             {toDo.task}
-            -BY {toDo.dueMonth}/2023
-            <button onClick={handleButtonPress} type="button">
-                {' '}
+            -BY {toDo.dueMonth}
+            <Button
+                onClick={onDeleteHandle}
+                variant="contained"
+                size="small"
+                type="button"
+                sx={deleteButtonStyle}
+            >
                 delete
-            </button>
-        </div>
+            </Button>
+        </StackTest>
     );
 }
+ToDo.propTypes = {
+    toDo: PropTypes.shape({
+        task: PropTypes.string,
+        dueMonth: PropTypes.string,
+        id: PropTypes.string,
+        show: PropTypes.bool,
+        priority: PropTypes.string,
+    }),
+    onRemoveTodo: PropTypes.func,
+};
+ToDo.defaultProps = {
+    toDo: {},
+    onRemoveTodo: () => {},
+};
+function RowStack(props) {
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    return <Stack {...props} direction="row" justifyContent="space-between" />;
+}
+function StackTest({ toDo, children }) {
+    const NewStack = styled(RowStack)(({ theme, priority, isNew }) => ({
+        backgroundColor: '#F7CAC9',
+        borderStyle: 'solid',
+        borderRadius: '25px',
+        padding: '10px',
+        width: '400px',
+        height: '30px',
+        margin: 'auto',
+        fontWeight: '700',
+        color: theme.palette.priority[priority],
+        borderColor: isNew ? theme.palette.priority.new : '',
+    }));
+    return (
+        <NewStack
+            id={toDo.id}
+            name="todo"
+            value={toDo.id}
+            priority={toDo.priority}
+            isNew={toDo.new}
+        >
+            {children}
+        </NewStack>
+    );
+}
+
+ToDo.priorities = priorities;
 
 export default ToDo;
